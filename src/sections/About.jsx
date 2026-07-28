@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import SectionShell from '../components/SectionShell'
 import SectionHeading from '../components/SectionHeading'
 import ScrollReveal from '../components/ScrollReveal'
@@ -8,7 +9,7 @@ function About() {
     <SectionShell id="about">
       <SectionHeading title="About Me" subtitle="Journey" />
       <div className="grid gap-8 items-stretch md:grid-cols-[1.05fr_1.3fr]">
-        <ScrollReveal className="glass-card h-full p-6 sm:p-8 rounded-[2.25rem] overflow-hidden">
+        <ScrollReveal className="glass-card h-full overflow-hidden p-3 sm:p-4">
           <img
             src="/images/himu.jpg"
             alt="Portrait of Himanshu Kumar"
@@ -31,11 +32,18 @@ function About() {
       </div>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((item) => (
-          <article key={item.label} className="glass-card p-5">
-            <p className="text-2xl font-semibold text-white">{item.value}</p>
-            <p className="mt-1 text-sm text-white/65">{item.label}</p>
-          </article>
+        {stats.map((item, index) => (
+          <motion.article
+            key={item.label}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.45, delay: index * 0.06 }}
+            className="glass-card p-5"
+          >
+            <p className="text-2xl font-semibold text-[#0F172A]">{item.value}</p>
+            <p className="mt-1 text-sm text-[#475569]">{item.label}</p>
+          </motion.article>
         ))}
       </div>
     </SectionShell>

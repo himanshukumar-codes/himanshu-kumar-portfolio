@@ -69,6 +69,16 @@ export const projectFilters = ['All', 'Full Stack', 'AI']
 
 export const projects = [
   {
+    title: 'Music Playlist Manager',
+    category: 'Full Stack',
+    description: 'A modern web application that helps users create, organize, and enjoy personalized music playlists in one place. The project includes a responsive UI, search and filtering options, favorites and recent-play tracking, and an interactive music player experience.',
+    tech: ["React", "Node.js", "Express", "Tailwind CSS", "WebAssembly"],
+    github: 'https://github.com/Himanshu-Kumar-LPU/Music-Playlist-Manager',
+    demo: 'https://music-playlist-manager-6jsq.onrender.com/',
+    icon: '/images/projectsimages/Music Playlist Manager.png',
+  },
+
+  {
     title: 'Friends Connections',
     category: 'Full Stack',
     description: 'A polished React + Vite app for browsing and connecting with friends through interactive profile cards.',

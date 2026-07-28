@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import SectionShell from '../components/SectionShell'
 import SectionHeading from '../components/SectionHeading'
 import { certificates } from '../constants/portfolioData'
@@ -25,34 +26,38 @@ function Certificates() {
       <SectionHeading title="Certificates" subtitle="Credentials" />
 
       <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {certificates.map((item) => {
+        {certificates.map((item, index) => {
           const [title, issuer] = item.split(' – ')
           const category = certificateCategory(item)
           const imageHref = certificateImageMap[item]
           return (
-            <a
+            <motion.a
               key={item}
               href={imageHref}
               target="_blank"
               rel="noreferrer"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: index * 0.06 }}
               className="group"
             >
-              <article className="glass-card p-6 transition duration-200 hover:-translate-y-1 hover:border-violet-300/40">
-                <div className="mb-4 inline-flex max-w-full items-center justify-center rounded-full bg-violet-500/15 px-3 py-2 text-violet-300 shadow-sm">
-                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-violet-100">
+              <article className="certificate-card glass-card p-5 sm:p-6 transition duration-200">
+                <div className="mb-4 inline-flex max-w-full items-center justify-center rounded-[12px] bg-[#EEF2FF] px-3 py-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#4F46E5]">
                     {category}
                   </span>
                 </div>
-                <h3 className="text-base font-semibold leading-snug text-white md:text-lg">
+                <h3 className="text-base font-semibold leading-snug text-[#0F172A] md:text-lg">
                   {title?.trim() ?? item}
                 </h3>
                 {issuer && (
-                  <p className="mt-3 text-sm text-white/60">
+                  <p className="mt-3 text-sm text-[#475569]">
                     {issuer.trim()}
                   </p>
                 )}
               </article>
-            </a>
+            </motion.a>
           )
         })}
       </div>

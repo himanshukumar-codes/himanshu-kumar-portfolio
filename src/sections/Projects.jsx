@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { motion } from 'framer-motion'
 import { FiGithub, FiExternalLink } from 'react-icons/fi'
 import SectionShell from '../components/SectionShell'
 import SectionHeading from '../components/SectionHeading'
@@ -24,8 +25,8 @@ function Projects() {
             onClick={() => setActiveFilter(filter)}
             className={`rounded-full px-4 py-2 text-sm transition ${
               activeFilter === filter
-                ? 'bg-violet-600 text-white shadow-[0_0_18px_rgba(124,58,237,0.65)]'
-                : 'glass-card text-white/70'
+                ? 'btn-primary'
+                : 'btn-outline text-[#A0A8C0]'
             }`}
           >
             {filter}
@@ -34,15 +35,19 @@ function Projects() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        {filteredProjects.map((project) => {
+        {filteredProjects.map((project, index) => {
           const Icon = project.icon
           return (
-            <article
+            <motion.article
               key={project.title}
-              className="project-card glass-card p-6"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.55, delay: index * 0.08 }}
+              className="project-card glass-card p-5 sm:p-6"
             >
-              <div className="mb-6 overflow-hidden rounded-[3rem] bg-slate-900/95 border border-slate-700 p-6 shadow-[0_24px_45px_rgba(15,23,42,0.24)]">
-                <div className="relative h-48 sm:h-56 md:h-[260px] w-full overflow-hidden rounded-[2.5rem] bg-slate-950 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
+              <div className="mb-6 overflow-hidden rounded-[18px] border border-[#E2E7F5] bg-[#F8FAFF] p-4">
+                <div className="relative h-48 sm:h-56 md:h-[260px] w-full overflow-hidden rounded-[12px] bg-[#F3F6FF]">
                   {typeof Icon === 'string' ? (
                     <img
                       src={Icon}
@@ -57,12 +62,12 @@ function Projects() {
                   )}
                 </div>
               </div>
-              <h3 className="text-2xl font-medium text-white">{project.title}</h3>
-                <p className="mt-2 text-sm text-white/70">{project.description}</p>
+              <h3 className="text-2xl font-medium text-[#0F172A]">{project.title}</h3>
+                <p className="mt-2 text-sm leading-7 text-[#475569]">{project.description}</p>
 
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {project.tech.map((item) => (
-                    <li key={item} className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/75">
+                    <li key={item} className="rounded-[12px] bg-[#EEF2FF] px-3 py-1 text-xs font-medium text-[#4F46E5]">
                       {item}
                     </li>
                   ))}
@@ -76,7 +81,7 @@ function Projects() {
                     <FiExternalLink /> Live Demo
                   </a>
                 </div>
-              </article>
+              </motion.article>
             )
           })}
       </div>

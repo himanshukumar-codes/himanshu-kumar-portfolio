@@ -8,11 +8,11 @@ function Education() {
       <SectionHeading title="Education" subtitle="Academic" />
       <div className="grid gap-5 md:grid-cols-2">
         {education.map((item) => (
-          <article key={item.title} className="glass-card p-6">
-            <p className="text-xs uppercase tracking-[0.2em] text-cyan-300/75">{item.period}</p>
-            <h3 className="mt-2 text-xl text-white">{item.title}</h3>
-            <p className="mt-1 text-sm text-white/65">{item.institute}</p>
-            <p className="mt-3 text-sm leading-7 text-white/75">{item.details}</p>
+          <article key={item.title} className="glass-card p-5 sm:p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0891B2]">{item.period}</p>
+            <h3 className="mt-2 text-xl text-[#0F172A]">{item.title}</h3>
+            <p className="mt-1 text-sm text-[#475569]">{item.institute}</p>
+            <p className="mt-3 text-sm leading-7 text-[#475569]">{item.details}</p>
           </article>
         ))}
       </div>

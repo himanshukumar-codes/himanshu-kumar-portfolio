@@ -62,8 +62,8 @@ function Navbar() {
           hidden ? '-translate-y-[140px]' : 'translate-y-0'
         }`}
       >
-        <nav className="glass-card flex items-center justify-between rounded-2xl px-4 py-3 md:px-6">
-        <a href="#hero" className="text-lg font-semibold tracking-[0.25em] text-white">
+        <nav className="glass-card flex items-center justify-between rounded-2xl border border-[#E2E7F5] bg-white/90 px-4 py-3 backdrop-blur md:px-6">
+        <a href="#hero" className="text-lg font-semibold tracking-[0.25em] text-[#0F172A]">
           HK
         </a>
         <ul className="hidden items-center gap-6 md:flex">
@@ -71,15 +71,13 @@ function Navbar() {
             <li key={item.id}>
               <a
                 href={`#${item.id}`}
-                className={`relative py-2 text-sm text-white/75 transition hover:text-white ${
-                  activeSection === item.id ? 'text-white' : ''
+                className={`relative rounded-full px-3 py-2 text-sm transition ${
+                  activeSection === item.id ? 'text-[#4F46E5]' : 'text-[#475569] hover:text-[#0F172A]'
                 }`}
               >
                 {item.label}
                 {activeSection === item.id && (
-                  <span
-                    className="absolute inset-x-0 -bottom-[2px] h-[2px] rounded-full bg-gradient-to-r from-violet-400 to-cyan-300"
-                  />
+                  <span className="absolute inset-x-1.5 -bottom-[2px] h-[2px] rounded-full bg-gradient-to-r from-[#4F46E5] to-[#0891B2]" />
                 )}
               </a>
             </li>
@@ -87,7 +85,7 @@ function Navbar() {
         </ul>
         <a
           href="#contact"
-          className="hidden md:inline-block rounded-full border border-cyan-200/50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200"
+          className="hidden rounded-full border border-[#E2E7F5] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#0F172A] transition hover:border-[#4F46E5]/35 hover:text-[#4F46E5] md:inline-block"
         >
           Hire Me
         </a>
@@ -95,7 +93,7 @@ function Navbar() {
         <button
           type="button"
           onClick={() => setMobileOpen((s) => !s)}
-          className="inline-flex items-center justify-center rounded-md bg-white/3 p-2 text-white md:hidden"
+          className="inline-flex items-center justify-center rounded-md border border-[#E2E7F5] bg-white p-2 text-[#0F172A] md:hidden"
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
         >
@@ -120,14 +118,14 @@ function Navbar() {
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            className={`fixed right-0 top-0 bottom-0 z-60 w-80 max-w-full transform bg-slate-900/95 p-6 transition-transform duration-300 ease-in-out ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`fixed right-0 top-0 bottom-0 z-60 w-80 max-w-full transform bg-white p-6 shadow-xl transition-transform duration-300 ease-in-out ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <div className="flex items-center justify-between">
-              <div className="text-lg font-semibold tracking-[0.2em] text-white">HK</div>
+              <div className="text-lg font-semibold tracking-[0.2em] text-[#0F172A]">HK</div>
               <button
                 aria-label="Close menu"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-md bg-white/3 p-2 text-white"
+                className="rounded-md border border-[#E2E7F5] bg-white p-2 text-[#0F172A]"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
@@ -141,7 +139,7 @@ function Navbar() {
                       ref={idx === 0 ? firstLinkRef : null}
                       href={`#${item.id}`}
                       onClick={() => setMobileOpen(false)}
-                      className="block rounded px-3 py-2 text-sm text-white/90"
+                      className={`block rounded px-3 py-2 text-sm transition ${activeSection === item.id ? 'bg-[#4F46E5]/10 text-[#4F46E5]' : 'text-[#475569]'}`}
                     >
                       {item.label}
                     </a>
@@ -151,7 +149,7 @@ function Navbar() {
             </nav>
 
             <div className="mt-6">
-              <a href="#contact" onClick={() => setMobileOpen(false)} className="block rounded bg-cyan-600/10 px-3 py-2 text-sm font-semibold text-cyan-200">
+              <a href="#contact" onClick={() => setMobileOpen(false)} className="block rounded bg-[#4F46E5]/10 px-3 py-2 text-sm font-semibold text-[#4F46E5]">
                 Hire Me
               </a>
             </div>

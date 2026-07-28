@@ -6,14 +6,14 @@ function Experience() {
   return (
     <SectionShell id="experience">
       <SectionHeading title="Experience" subtitle="Career" />
-      <div className="relative space-y-8 border-l border-violet-300/30 pl-6">
+      <div className="relative space-y-8 border-l border-[#E2E7F5] pl-6">
         {experience.map((item) => (
-          <article key={item.title} className="glass-card relative p-6">
-            <span className="absolute -left-[34px] top-7 h-3 w-3 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(6,182,212,0.8)]" />
-            <p className="text-sm text-cyan-300/80">{item.period}</p>
-            <h3 className="mt-1 text-xl text-white">{item.title}</h3>
-            <p className="text-sm text-white/65">{item.company}</p>
-            <p className="mt-3 text-sm leading-7 text-white/75">{item.details}</p>
+          <article key={item.title} className="glass-card relative p-5 sm:p-6">
+            <span className="absolute -left-[34px] top-7 h-3 w-3 rounded-full bg-gradient-to-r from-[#4F46E5] to-[#0891B2]" />
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#0891B2]">{item.period}</p>
+            <h3 className="mt-1 text-xl text-[#0F172A]">{item.title}</h3>
+            <p className="mt-1 text-sm text-[#475569]">{item.company}</p>
+            <p className="mt-3 text-sm leading-7 text-[#475569]">{item.details}</p>
           </article>
         ))}
       </div>
