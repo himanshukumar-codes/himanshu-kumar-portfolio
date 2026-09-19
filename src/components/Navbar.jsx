@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import { FiMenu, FiMoon, FiSun, FiX } from 'react-icons/fi'
 import { navItems } from '../constants/portfolioData'
 import { useActiveSection } from '../hooks/useActiveSection'
 
-function Navbar() {
+function Navbar({ theme, onToggleTheme }) {
   const [hidden, setHidden] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const panelRef = useRef(null)
@@ -62,17 +63,17 @@ function Navbar() {
           hidden ? '-translate-y-[140px]' : 'translate-y-0'
         }`}
       >
-        <nav className="glass-card flex items-center justify-between rounded-2xl border border-[#E2E7F5] bg-white/90 px-4 py-3 backdrop-blur md:px-6">
-        <a href="#hero" className="text-lg font-semibold tracking-[0.25em] text-[#0F172A]">
+        <nav aria-label="Primary navigation" className="glass-card flex items-center justify-between rounded-2xl border border-[#E2E7F5] bg-white/90 px-4 py-3 backdrop-blur md:px-6">
+        <a href="#hero" className="rounded-lg text-lg font-semibold tracking-[0.25em] text-[#0F172A]">
           HK
         </a>
-        <ul className="hidden items-center gap-6 md:flex">
+        <ul className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
             <li key={item.id}>
               <a
                 href={`#${item.id}`}
                 className={`relative rounded-full px-3 py-2 text-sm transition ${
-                  activeSection === item.id ? 'text-[#4F46E5]' : 'text-[#475569] hover:text-[#0F172A]'
+                  activeSection === item.id ? 'bg-[#EEF2FF] text-[#4F46E5]' : 'text-[#475569] hover:bg-[#F8FAFF] hover:text-[#0F172A]'
                 }`}
               >
                 {item.label}
@@ -85,23 +86,30 @@ function Navbar() {
         </ul>
         <a
           href="#contact"
-          className="hidden rounded-full border border-[#E2E7F5] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#0F172A] transition hover:border-[#4F46E5]/35 hover:text-[#4F46E5] md:inline-block"
+          className="btn-outline hidden px-4 py-2 text-xs uppercase tracking-[0.2em] md:inline-flex"
         >
           Hire Me
         </a>
 
         <button
           type="button"
+          onClick={onToggleTheme}
+          className="theme-toggle ml-auto mr-2 inline-flex items-center justify-center rounded-xl border border-[#E2E7F5] bg-white p-2 text-[#0F172A] transition hover:border-[#4F46E5]/35 hover:text-[#4F46E5] md:ml-0"
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          aria-pressed={theme === 'dark'}
+          title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        >
+          {theme === 'dark' ? <FiSun aria-hidden="true" className="h-5 w-5" /> : <FiMoon aria-hidden="true" className="h-5 w-5" />}
+        </button>
+
+        <button
+          type="button"
           onClick={() => setMobileOpen((s) => !s)}
-          className="inline-flex items-center justify-center rounded-md border border-[#E2E7F5] bg-white p-2 text-[#0F172A] md:hidden"
+          className="inline-flex items-center justify-center rounded-xl border border-[#E2E7F5] bg-white p-2 text-[#0F172A] transition hover:border-[#4F46E5]/35 hover:text-[#4F46E5] md:hidden"
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
         >
-          {!mobileOpen ? (
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M3 6h18M3 18h18" /></svg>
-          ) : (
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 18L18 6M6 6l12 12" /></svg>
-          )}
+          {mobileOpen ? <FiX aria-hidden="true" className="h-5 w-5" /> : <FiMenu aria-hidden="true" className="h-5 w-5" />}
         </button>
         </nav>
       </header>
@@ -118,16 +126,16 @@ function Navbar() {
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            className={`fixed right-0 top-0 bottom-0 z-60 w-80 max-w-full transform bg-white p-6 shadow-xl transition-transform duration-300 ease-in-out ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`fixed right-0 top-0 bottom-0 z-60 w-80 max-w-full transform border-l border-[#E2E7F5] bg-[#F8FAFF] p-6 shadow-xl transition-transform duration-300 ease-in-out ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <div className="flex items-center justify-between">
               <div className="text-lg font-semibold tracking-[0.2em] text-[#0F172A]">HK</div>
               <button
                 aria-label="Close menu"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-md border border-[#E2E7F5] bg-white p-2 text-[#0F172A]"
+                className="rounded-xl border border-[#E2E7F5] bg-white p-2 text-[#0F172A] transition hover:border-[#4F46E5]/35 hover:text-[#4F46E5]"
               >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 18L18 6M6 6l12 12" /></svg>
+                <FiX aria-hidden="true" className="h-5 w-5" />
               </button>
             </div>
 
@@ -139,7 +147,7 @@ function Navbar() {
                       ref={idx === 0 ? firstLinkRef : null}
                       href={`#${item.id}`}
                       onClick={() => setMobileOpen(false)}
-                      className={`block rounded px-3 py-2 text-sm transition ${activeSection === item.id ? 'bg-[#4F46E5]/10 text-[#4F46E5]' : 'text-[#475569]'}`}
+                      className={`block rounded-xl px-4 py-3 text-sm font-medium transition ${activeSection === item.id ? 'bg-[#EEF2FF] text-[#4F46E5]' : 'text-[#475569] hover:bg-white hover:text-[#0F172A]'}`}
                     >
                       {item.label}
                     </a>

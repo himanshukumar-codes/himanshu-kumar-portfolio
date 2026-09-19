@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { FiMail } from 'react-icons/fi'
+import { FiMail, FiMessageSquare, FiUser } from 'react-icons/fi'
 import SectionShell from '../components/SectionShell'
 import SectionHeading from '../components/SectionHeading'
 import MagneticButton from '../components/MagneticButton'
@@ -94,20 +94,27 @@ function Contact() {
           </div>
         </motion.article>
 
-        <motion.form initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} onSubmit={onSubmit} noValidate className="glass-card space-y-4 p-6 sm:p-8">
+        <motion.form initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} onSubmit={onSubmit} noValidate className="glass-card space-y-5 p-6 sm:p-8">
+          <div className="border-b border-[#E2E7F5] pb-4">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#4F46E5]">Start a conversation</p>
+            <p className="mt-2 text-sm leading-6 text-[#64748B]">Tell me what you&apos;re building and I&apos;ll get back to you soon.</p>
+          </div>
           <div>
             <label htmlFor="name" className="mb-2 block text-sm text-[#475569]">
               Name
             </label>
-            <input
-              id="name"
-              name="name"
-              autoComplete="name"
-              value={formState.name}
-              onChange={onChange}
-              className="input"
-              placeholder="Your full name"
-            />
+            <div className="relative">
+              <FiUser aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-[#64748B]" />
+              <input
+                id="name"
+                name="name"
+                autoComplete="name"
+                value={formState.name}
+                onChange={onChange}
+                className="input leading-icon"
+                placeholder="Your full name"
+              />
+            </div>
             {errors.name && <p className="mt-1 text-xs text-red-300">{errors.name}</p>}
           </div>
 
@@ -136,15 +143,18 @@ function Contact() {
             <label htmlFor="message" className="mb-2 block text-sm text-[#475569]">
               Message
             </label>
-            <textarea
-              id="message"
-              name="message"
-              autoComplete="off"
-              value={formState.message}
-              onChange={onChange}
-              className="input min-h-36"
-              placeholder="Tell me about your project"
-            />
+            <div className="relative">
+              <FiMessageSquare aria-hidden="true" className="pointer-events-none absolute left-4 top-4 text-lg text-[#64748B]" />
+              <textarea
+                id="message"
+                name="message"
+                autoComplete="off"
+                value={formState.message}
+                onChange={onChange}
+                className="input leading-icon min-h-36"
+                placeholder="Tell me about your project"
+              />
+            </div>
             {errors.message && <p className="mt-1 text-xs text-red-300">{errors.message}</p>}
           </div>
 
@@ -161,7 +171,7 @@ function Contact() {
       </div>
 
       {toast && (
-        <div className="fixed bottom-4 right-4 z-[80] rounded-[12px] border border-[#E2E7F5] bg-white px-4 py-3 text-sm text-[#0F172A] shadow-lg">
+        <div className="toast fixed bottom-4 right-4 z-[80] rounded-[12px] border border-[#E2E7F5] bg-white px-4 py-3 text-sm text-[#0F172A] shadow-lg">
           {toast.message}
         </div>
       )}

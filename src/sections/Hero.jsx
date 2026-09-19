@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
+import { FiArrowRight, FiFileText } from 'react-icons/fi'
 import { socialLinks } from '../constants/portfolioData'
 import SectionShell from '../components/SectionShell'
 import MagneticButton from '../components/MagneticButton'
@@ -112,7 +113,15 @@ function Hero({ lowPerformance = false }) {
             <span className="typing-cursor">|</span>
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-[#475569]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#BBF7D0] bg-[#F0FDF4] px-3 py-1.5 font-medium text-[#166534]">
+              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[#22C55E]" />
+              Available for opportunities
+            </span>
+            <span className="text-[#64748B]">Based in India</span>
+          </div>
+
+          <div className="mt-9 flex flex-wrap items-center gap-3">
             <MagneticButton
               type="button"
               className="btn-primary"
@@ -122,9 +131,13 @@ function Hero({ lowPerformance = false }) {
                 link.click()
               }}
             >
-              Download Resume
+              <FiFileText aria-hidden="true" />
+              View Resume
             </MagneticButton>
-            <a href="#contact" className="btn-outline">Contact Me</a>
+            <a href="#contact" className="btn-outline" aria-label="Go to contact section">
+              Let&apos;s work together
+              <FiArrowRight aria-hidden="true" />
+            </a>
           </div>
 
           <div className="mt-10 flex items-center gap-4">

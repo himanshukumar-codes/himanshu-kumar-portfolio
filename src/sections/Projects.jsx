@@ -23,6 +23,7 @@ function Projects() {
             key={filter}
             type="button"
             onClick={() => setActiveFilter(filter)}
+            aria-pressed={activeFilter === filter}
             className={`rounded-full px-4 py-2 text-sm transition ${
               activeFilter === filter
                 ? 'btn-primary'
@@ -33,6 +34,10 @@ function Projects() {
           </button>
         ))}
       </div>
+
+      <p className="-mt-3 mb-6 text-sm text-[#64748B]" aria-live="polite">
+        Showing {filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'}
+      </p>
 
       <div className="grid gap-6 md:grid-cols-2">
         {filteredProjects.map((project, index) => {
@@ -74,10 +79,10 @@ function Projects() {
                 </ul>
 
                 <div className="mt-6 flex items-center gap-3">
-                  <a href={project.github} target="_blank" rel="noreferrer" className="social-pill">
+                  <a href={project.github} target="_blank" rel="noreferrer" className="social-pill" aria-label={`View ${project.title} on GitHub`}>
                     <FiGithub /> GitHub
                   </a>
-                  <a href={project.demo} target="_blank" rel="noreferrer" className="social-pill">
+                  <a href={project.demo} target="_blank" rel="noreferrer" className="social-pill" aria-label={`Open live demo for ${project.title}`}>
                     <FiExternalLink /> Live Demo
                   </a>
                 </div>
