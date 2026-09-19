@@ -119,7 +119,6 @@ function Hero({ lowPerformance = false }) {
               onClick={() => {
                 const link = document.createElement('a')
                 link.href = '/Himanshu_Kumar_Resume.pdf'
-                link.download = 'Himanshu_Kumar_Resume.pdf'
                 link.click()
               }}
             >

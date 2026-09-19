@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { FiMail } from 'react-icons/fi'
 import SectionShell from '../components/SectionShell'
 import SectionHeading from '../components/SectionHeading'
 import MagneticButton from '../components/MagneticButton'
@@ -12,7 +13,7 @@ function Contact() {
   const [status, setStatus] = useState({ type: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [toast, setToast] = useState(null)
-  const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT || ''
+  const formEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formsubmit.co/ajax/kumarhimanshu995573@gmail.com'
 
   const validate = () => {
     const nextErrors = {}
@@ -47,15 +48,20 @@ function Contact() {
     const mailtoUrl = `mailto:kumarhimanshu995573@gmail.com?subject=${encodeURIComponent(`Portfolio inquiry from ${formState.name}`)}&body=${encodeURIComponent(message)}`
 
     try {
-      if (formspreeEndpoint) {
-        const response = await fetch(formspreeEndpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ name: formState.name, email: formState.email, message: formState.message }),
-        })
+      const response = await fetch(formEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          Name: formState.name,
+          Email: formState.email,
+          Message: formState.message,
+          _subject: `Portfolio inquiry from ${formState.name}`,
+          _replyto: formState.email,
+          _template: 'table',
+        }),
+      })
 
-        if (!response.ok) throw new Error('Form endpoint unavailable')
-      }
+      if (!response.ok) throw new Error('Form endpoint unavailable')
 
       setStatus({ type: 'success', message: 'Message sent successfully. I will get back to you shortly.' })
       setToast({ type: 'success', message: 'Thanks for reaching out. I will reply soon.' })
@@ -109,16 +115,20 @@ function Contact() {
             <label htmlFor="email" className="mb-2 block text-sm text-[#475569]">
               Email
             </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={formState.email}
-              onChange={onChange}
-              className="input"
-              placeholder="you@example.com"
-            />
+            <div className="relative">
+              <FiMail aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-[#4F46E5]" />
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                value={formState.email}
+                onChange={onChange}
+                aria-invalid={Boolean(errors.email)}
+                className={`input email-input ${errors.email ? 'input-error' : ''}`}
+                placeholder="you@example.com"
+              />
+            </div>
             {errors.email && <p className="mt-1 text-xs text-red-300">{errors.email}</p>}
           </div>
 
