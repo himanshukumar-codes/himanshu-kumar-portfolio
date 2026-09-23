@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiCode, FiGlobe, FiServer, FiTool, FiUsers } from 'react-icons/fi'
 import SectionShell from '../components/SectionShell'
@@ -72,50 +72,59 @@ function SkillRow({ skill, visible, index }) {
   )
 }
 
-function Skills() {
+function SkillCard({ category, list, index }) {
   const [visible, setVisible] = useState(false)
+  const cardRef = useRef(null)
 
   useEffect(() => {
-    const section = document.getElementById('skills')
-    if (!section) return
+    const card = cardRef.current
+    if (!card) return undefined
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.intersectionRatio > 0.15) {
+        if (entry.isIntersecting) {
           setVisible(true)
           observer.disconnect()
         }
       },
-      { threshold: [0.15, 0.5] }
+      { threshold: 0.2, rootMargin: '0px 0px -12% 0px' }
     )
 
-    observer.observe(section)
+    observer.observe(card)
     return () => observer.disconnect()
   }, [])
 
+  const Icon = categoryIcons[category]
+
+  return (
+    <motion.article
+      ref={cardRef}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.55, delay: index * 0.08 }}
+      className={`skill-card glass-card p-5 sm:p-6 ${categoryClasses[category]} ${category === 'Soft Skills' ? 'md:col-span-2' : ''}`}
+    >
+      <h3 className="skill-category-heading text-xl font-medium text-[#0F172A]">
+        <span className="skill-category-icon" aria-hidden="true"><Icon /></span>
+        {category}
+      </h3>
+      <div className={`skill-list mt-5 ${category === 'Soft Skills' ? 'skills-soft-list md:grid md:grid-cols-2 md:gap-x-8 md:space-y-0' : 'space-y-5'}`}>
+        {list.map((skill, skillIndex) => (
+          <SkillRow key={skill.name} skill={skill} visible={visible} index={skillIndex} />
+        ))}
+      </div>
+    </motion.article>
+  )
+}
+
+function Skills() {
   return (
     <SectionShell id="skills">
       <SectionHeading title="Skills" subtitle="Capabilities" />
       <div className="skills-grid grid grid-cols-1 gap-5 md:grid-cols-2">
         {Object.entries(skills).map(([category, list], index) => (
-          <motion.article
-            key={category}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.55, delay: index * 0.08 }}
-            className={`skill-card glass-card p-5 sm:p-6 ${categoryClasses[category]} ${category === 'Soft Skills' ? 'md:col-span-2' : ''}`}
-          >
-            <h3 className="skill-category-heading text-xl font-medium text-[#0F172A]">
-              <span className="skill-category-icon" aria-hidden="true">{(() => { const Icon = categoryIcons[category]; return <Icon /> })()}</span>
-              {category}
-            </h3>
-            <div className={`skill-list mt-5 ${category === 'Soft Skills' ? 'skills-soft-list md:grid md:grid-cols-2 md:gap-x-8 md:space-y-0' : 'space-y-5'}`}>
-              {list.map((skill, skillIndex) => (
-                <SkillRow key={skill.name} skill={skill} visible={visible} index={skillIndex} />
-              ))}
-            </div>
-          </motion.article>
+          <SkillCard key={category} category={category} list={list} index={index} />
         ))}
       </div>
     </SectionShell>
