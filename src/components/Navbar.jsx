@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { FiMenu, FiMoon, FiSun, FiX } from 'react-icons/fi'
 import { navItems } from '../constants/portfolioData'
 import { useActiveSection } from '../hooks/useActiveSection'
 
 function Navbar({ theme, onToggleTheme }) {
   const [hidden, setHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const panelRef = useRef(null)
   const firstLinkRef = useRef(null)
@@ -15,6 +17,7 @@ function Navbar({ theme, onToggleTheme }) {
     const onScroll = () => {
       const y = window.scrollY
       setHidden(y > lastY && y > 140)
+      setScrolled(y > 24)
       lastY = y
     }
     window.addEventListener('scroll', onScroll)
@@ -59,11 +62,11 @@ function Navbar({ theme, onToggleTheme }) {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-40 mx-auto mt-4 w-[min(1100px,92%)] transition-all duration-300 ${
+        className={`site-navbar fixed inset-x-0 top-0 z-40 mx-auto mt-4 w-[min(1100px,92%)] transition-all duration-300 ${
           hidden ? '-translate-y-[140px]' : 'translate-y-0'
         }`}
       >
-        <nav aria-label="Primary navigation" className="glass-card flex items-center justify-between rounded-2xl border border-[#E2E7F5] bg-white/90 px-4 py-3 backdrop-blur md:px-6">
+        <nav aria-label="Primary navigation" className={`glass-card flex items-center justify-between rounded-2xl border border-[#E2E7F5] bg-white/75 px-4 backdrop-blur-xl md:px-6 ${scrolled ? 'navbar-scrolled py-2' : 'py-3'}`}>
         <a href="#hero" className="rounded-lg text-lg font-semibold tracking-[0.25em] text-[#0F172A]">
           HK
         </a>
@@ -72,21 +75,19 @@ function Navbar({ theme, onToggleTheme }) {
             <li key={item.id}>
               <a
                 href={`#${item.id}`}
-                className={`relative rounded-full px-3 py-2 text-sm transition ${
+                className={`nav-link relative rounded-full px-3 py-2 text-sm transition ${
                   activeSection === item.id ? 'bg-[#EEF2FF] text-[#4F46E5]' : 'text-[#475569] hover:bg-[#F8FAFF] hover:text-[#0F172A]'
                 }`}
               >
                 {item.label}
-                {activeSection === item.id && (
-                  <span className="absolute inset-x-1.5 -bottom-[2px] h-[2px] rounded-full bg-gradient-to-r from-[#4F46E5] to-[#0891B2]" />
-                )}
+                <span className={`nav-link-underline absolute inset-x-1.5 -bottom-[2px] h-[2px] origin-center rounded-full bg-gradient-to-r from-[#4F46E5] to-[#0891B2] transition-transform duration-300 ${activeSection === item.id ? 'scale-x-100' : 'scale-x-0'}`} />
               </a>
             </li>
           ))}
         </ul>
         <a
           href="#contact"
-          className="btn-outline hidden px-4 py-2 text-xs uppercase tracking-[0.2em] md:inline-flex"
+          className="navbar-hire btn-outline hidden px-4 py-2 text-xs uppercase tracking-[0.2em] md:inline-flex"
         >
           Hire Me
         </a>
@@ -99,7 +100,18 @@ function Navbar({ theme, onToggleTheme }) {
           aria-pressed={theme === 'dark'}
           title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
         >
-          {theme === 'dark' ? <FiSun aria-hidden="true" className="h-5 w-5" /> : <FiMoon aria-hidden="true" className="h-5 w-5" />}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={theme}
+              initial={{ opacity: 0, rotate: -90, scale: 0.7 }}
+              animate={{ opacity: 1, rotate: 0, scale: 1 }}
+              exit={{ opacity: 0, rotate: 90, scale: 0.7 }}
+              transition={{ duration: 0.25 }}
+              className="inline-flex"
+            >
+              {theme === 'dark' ? <FiSun aria-hidden="true" className="h-5 w-5" /> : <FiMoon aria-hidden="true" className="h-5 w-5" />}
+            </motion.span>
+          </AnimatePresence>
         </button>
 
         <button

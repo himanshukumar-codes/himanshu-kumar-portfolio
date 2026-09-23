@@ -6,7 +6,7 @@ import InitialLoader from './components/InitialLoader'
 const getInitialTheme = () => {
   const savedTheme = window.localStorage.getItem('portfolio-theme-v2')
   if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme
-  return 'light'
+  return 'dark'
 }
 
 const Hero = lazy(() => import('./sections/Hero'))

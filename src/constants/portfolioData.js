@@ -138,8 +138,10 @@ export const education = [
 ]
 
 export const certificates = [
+  "Oracle Cloud Infrastructure Certified AI Foundations Associate – Oracle University",
   "Programming Using C++ – Infosys Springboard",
   "C Programming – Lovely Professional University",
+  "Basics of DSA – Lovely Professional University",
   "React.js Certification – Tech Veda",
   "Basic Python Certification – Skillera",
   "Time Management Certification – Master Union",
@@ -147,7 +149,7 @@ export const certificates = [
 
 export const achievements = [
   { label: 'Projects Completed', value: 8 },
-  { label: 'Certificates Earned', value: 5 },
+  { label: 'Certificates Earned', value: 7 },
   { label: 'Technologies Learned', value: 15 },
   { label: 'GitHub Repositories', value: 24 },
 ]
